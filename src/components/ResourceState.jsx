@@ -8,7 +8,7 @@ export function ResourceState({
 }) {
   if (isLoading) {
     return (
-      <div className={loadingClassName}>
+      <div className={loadingClassName} role="status" aria-live="polite" aria-label="Chargement en cours">
         {Array.from({ length: skeletonCount }).map((_, index) => (
           <div className="skeleton" key={index} />
         ))}
@@ -17,7 +17,11 @@ export function ResourceState({
   }
 
   if (error) {
-    return <div className="empty-state">{errorMessage}</div>
+    return (
+      <div className="empty-state" role="alert">
+        {errorMessage}
+      </div>
+    )
   }
 
   return children

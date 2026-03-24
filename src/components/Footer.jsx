@@ -1,21 +1,51 @@
 import { Link } from 'react-router-dom'
+import { siteText } from '../content/siteText'
 
 export function Footer() {
   return (
-    <footer className="footer" id="contact">
+    <footer className="footer" id="footer-contact">
       <div className="container footer-inner">
-        <div className="footer-brand">
-          <strong>CYNA</strong>
-          <p className="section-copy footer-copy">
-            React serves the public website. Symfony serves JSON only. This footer is part of the shared SPA shell and
-            will stay reusable as routes expand.
-          </p>
+        <div className="footer-brand" id="footer-about">
+          <strong>{siteText.footer.title}</strong>
+          <p className="section-copy footer-copy">{siteText.footer.copy}</p>
         </div>
 
-        <div className="footer-links">
-          <Link to="/">Home</Link>
-          <Link to="/categories">Categories</Link>
-          <Link to="/products">Products</Link>
+        <div className="footer-group" id="footer-legal">
+          <strong>Informations</strong>
+          <div className="footer-links">
+            <Link to="/">Accueil</Link>
+            <Link to="/categories">Catégories</Link>
+            <Link to="/products">Produits</Link>
+            {siteText.footer.legalLinks.map((link) => (
+              <a href={link.href} key={link.label}>
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="footer-group">
+          <strong>Contact</strong>
+          <div className="footer-links">
+            <a href="mailto:contact@cyna.fr">contact@cyna.fr</a>
+            <a href="tel:+33180000000">01 80 00 00 00</a>
+          </div>
+        </div>
+
+        <div className="footer-group">
+          <strong>Réseaux sociaux</strong>
+          <div className="footer-links">
+            {siteText.footer.socialLinks.map((link) => (
+              <a
+                href={link.href}
+                key={link.label}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noreferrer' : undefined}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>

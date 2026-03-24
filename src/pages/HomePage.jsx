@@ -59,38 +59,8 @@ export function HomePage() {
 
   return (
     <>
-      <Hero />
       <Carousel />
-
-      <section className="section">
-        <div className="container">
-          <div className="feature-band panel">
-            <span className="eyebrow">Headless storefront baseline</span>
-            <h2 className="section-title feature-title">
-              Symfony serves JSON, React serves the public web experience
-            </h2>
-            <p className="section-copy feature-copy">
-              This page only consumes public API endpoints already available in the backend. No Twig rendering, no
-              embedded React, and no hybrid public frontend.
-            </p>
-            <div className="feature-grid">
-              <div className="feature-card">
-                <strong>SPA-ready shell</strong>
-                <p>Navbar, footer and routes are now shared across pages.</p>
-              </div>
-              <div className="feature-card">
-                <strong>Reusable resource states</strong>
-                <p>Loading and error rendering is now handled consistently across API-driven sections.</p>
-              </div>
-              <div className="feature-card">
-                <strong>Future routes prepared</strong>
-                <p>The project can now grow into products and categories pages without reshaping the homepage layout.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <Hero />
       <CategoriesGrid categories={categories} isLoading={isCategoriesLoading} error={categoriesError} />
       <TopProducts products={featuredProducts} isLoading={isProductsLoading} error={productsError} />
     </>

@@ -1,22 +1,22 @@
 import { Link } from 'react-router-dom'
+import { siteText } from '../content/siteText'
 
 export function ProductsPage() {
+  const page = siteText.pages.products
+
   return (
     <section className="section page-placeholder">
       <div className="container">
         <div className="placeholder-card panel">
-          <span className="eyebrow">Route placeholder</span>
-          <h1 className="section-title placeholder-title">Products route is staged for the next iteration</h1>
-          <p className="section-copy placeholder-copy">
-            The shared shell and router are already in place. This route can later evolve into a real product listing
-            page backed by `/api/products` without changing the core SPA structure.
-          </p>
+          <span className="eyebrow">{page.eyebrow}</span>
+          <h1 className="section-title placeholder-title">{page.title}</h1>
+          <p className="section-copy placeholder-copy">{page.copy}</p>
           <div className="hero-actions">
             <Link className="button-primary" to="/">
-              Back to homepage
+              {page.primary}
             </Link>
             <Link className="button-secondary" to="/categories">
-              Open categories placeholder
+              {page.secondary}
             </Link>
           </div>
         </div>

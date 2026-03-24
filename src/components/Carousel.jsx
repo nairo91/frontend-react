@@ -1,35 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { SectionHeading } from './SectionHeading'
-
-const slides = [
-  {
-    eyebrow: 'SOC offer',
-    title: '24/7 surveillance and guided response',
-    copy: 'Analysts, playbooks and reporting combined into a managed security layer that can scale with the catalog.',
-    cta: 'Explore managed SOC',
-    panelTitle: 'Included',
-    panelCopy: 'Playbooks, reporting and escalation workflows.',
-  },
-  {
-    eyebrow: 'EDR Pro',
-    title: 'Endpoint detection with faster containment',
-    copy: 'Behavioral detection, guided remediation and clearer visibility for lean security teams.',
-    cta: 'Compare EDR plans',
-    panelTitle: 'Expected gain',
-    panelCopy: 'Reduce time-to-triage on endpoint incidents.',
-  },
-  {
-    eyebrow: 'XDR Suite',
-    title: 'Cross-source correlation without dashboard overload',
-    copy: 'A focused product story for teams that need one operational layer across multiple signal sources.',
-    cta: 'Request a demo',
-    panelTitle: 'Best fit',
-    panelCopy: 'IT and SecOps teams running mixed environments.',
-  },
-]
+import { siteText } from '../content/siteText'
 
 export function Carousel() {
+  const slides = siteText.home.slides
   const [activeIndex, setActiveIndex] = useState(0)
 
   const goToPrevious = () => {
@@ -42,73 +16,78 @@ export function Carousel() {
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      goToNext()
-    }, 4500)
+      setActiveIndex((current) => (current + 1) % slides.length)
+    }, 5000)
 
     return () => window.clearInterval(timer)
-  }, [])
+  }, [slides.length])
 
   return (
-    <section className="section">
+    <section className="hero-carousel" id="top" aria-label="Carrousel d'accueil CYNA">
       <div className="container carousel">
-        <SectionHeading
-          title="Spotlight"
-          copy="Static marketing blocks for now, organized as a reusable carousel module with explicit navigation."
-          meta={`${activeIndex + 1} / ${slides.length}`}
-        />
-
         <div className="carousel-window panel">
           <div className="carousel-track" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
             {slides.map((slide) => (
               <div className="carousel-slide" key={slide.title}>
-                <div className="slide-card">
+                <article className="slide-card">
                   <div className="slide-copy">
                     <span className="eyebrow">{slide.eyebrow}</span>
-                    <h3 className="section-title slide-title">{slide.title}</h3>
+                    <h1 className="carousel-title slide-title">{slide.title}</h1>
                     <p className="section-copy slide-copy-text">{slide.copy}</p>
-                    <div className="hero-actions">
-                      <Link className="button-primary" to="/products">
+                    <div className="carousel-actions">
+                      <Link className="button-primary" to={slide.to}>
                         {slide.cta}
                       </Link>
                     </div>
                   </div>
 
-                  <div className="slide-panel">
-                    <strong>{slide.panelTitle}</strong>
-                    <p className="section-copy slide-panel-copy">{slide.panelCopy}</p>
-                    <div className="slide-signal">
-                      <span />
-                      <span />
-                      <span />
+                  <div className="slide-visual" aria-hidden="true">
+                    <div className="slide-visual-surface">
+                      <strong>{slide.visualTitle}</strong>
+                      <ul className="slide-visual-list">
+                        {slide.visualItems.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                      <div className="slide-signal">
+                        <span />
+                        <span />
+                        <span />
+                      </div>
                     </div>
                   </div>
-                </div>
+                </article>
               </div>
             ))}
           </div>
         </div>
 
         <div className="carousel-controls">
-          <button className="carousel-arrow" type="button" onClick={goToPrevious} aria-label="Show previous slide">
-            ←
+          <button className="carousel-arrow" type="button" onClick={goToPrevious} aria-label="Afficher la slide precedente">
+            {"\u2190"}
           </button>
 
-          <div className="carousel-dots" aria-label="Carousel navigation">
+          <div className="carousel-dots" aria-label="Navigation du carrousel">
             {slides.map((slide, index) => (
               <button
                 key={slide.title}
                 className={index === activeIndex ? 'is-active' : ''}
                 type="button"
-                aria-label={`Show slide ${index + 1}`}
+                aria-label={`Afficher la slide ${index + 1}`}
                 onClick={() => setActiveIndex(index)}
               />
             ))}
           </div>
 
-          <button className="carousel-arrow" type="button" onClick={goToNext} aria-label="Show next slide">
-            →
+          <button className="carousel-arrow" type="button" onClick={goToNext} aria-label="Afficher la slide suivante">
+            {"\u2192"}
           </button>
         </div>
+
+        <p className="carousel-caption">
+          CYNA vous aide a explorer des offres de cybersEcurite plus lisibles, plus comparables et mieux adaptees a
+          votre contexte d&apos;entreprise.
+        </p>
       </div>
     </section>
   )
