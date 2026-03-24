@@ -1,22 +1,29 @@
+import { NavLink } from 'react-router-dom'
 import cynaMark from '../assets/cyna-mark.svg'
 
 export function Navbar() {
   return (
     <header className="nav">
       <div className="container nav-inner">
-        <a className="nav-brand" href="#top" aria-label="CYNA home">
+        <NavLink className="nav-brand" to="/" aria-label="CYNA home">
           <img src={cynaMark} alt="" />
           <span>CYNA</span>
-        </a>
+        </NavLink>
 
         <nav className="nav-links" aria-label="Main">
-          <a href="#categories">Categories</a>
-          <a href="#featured">Top products</a>
-          <a href="#contact">Contact</a>
+          <NavLink className={({ isActive }) => (isActive ? 'nav-link is-active' : 'nav-link')} to="/">
+            Home
+          </NavLink>
+          <NavLink className={({ isActive }) => (isActive ? 'nav-link is-active' : 'nav-link')} to="/categories">
+            Categories
+          </NavLink>
+          <NavLink className={({ isActive }) => (isActive ? 'nav-link is-active' : 'nav-link')} to="/products">
+            Products
+          </NavLink>
         </nav>
 
         <div className="nav-search">
-          <input type="search" placeholder="Search a cybersecurity service..." aria-label="Search" />
+          <input type="search" placeholder="Search a service..." aria-label="Search" />
         </div>
       </div>
     </header>

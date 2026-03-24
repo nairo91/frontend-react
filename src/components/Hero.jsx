@@ -1,30 +1,46 @@
+import { Link } from 'react-router-dom'
+
 export function Hero() {
   return (
     <section className="hero" id="top">
       <div className="container hero-grid">
         <article className="hero-copy panel">
-          <span className="eyebrow">Managed security, built for operating teams</span>
+          <span className="eyebrow">Managed cybersecurity for operating teams</span>
+          <div className="hero-badge-strip">
+            <span>API-first storefront</span>
+            <span>React SPA</span>
+            <span>Symfony backend</span>
+          </div>
           <h1 className="hero-title">
-            Protect your business with <span>CYNA</span>
+            Launch a cleaner security storefront with <span>CYNA</span>
           </h1>
           <p className="hero-text">
-            SOC, EDR and XDR services delivered as a clean SaaS storefront. This first React version keeps the
-            marketing story simple while the Symfony backend stays focused on JSON APIs only.
+            A dedicated React public frontend backed by a Symfony JSON API. This baseline keeps the catalog visible
+            while the project grows into a more complete SPA.
           </p>
 
           <div className="hero-actions">
-            <a className="button-primary" href="#featured">
-              Discover top products
-            </a>
-            <a className="button-secondary" href="#categories">
-              Browse categories
-            </a>
+            <Link className="button-primary" to="/products">
+              View products
+            </Link>
+            <Link className="button-secondary" to="/categories">
+              Explore categories
+            </Link>
           </div>
 
-          <div className="hero-pills">
-            <span className="pill">Fast onboarding</span>
-            <span className="pill">24/7 supervision</span>
-            <span className="pill">Actionable reporting</span>
+          <div className="hero-stats">
+            <div className="hero-stat panel">
+              <strong>Headless-ready</strong>
+              <span>Public UI and API are fully separated.</span>
+            </div>
+            <div className="hero-stat panel">
+              <strong>Featured offers</strong>
+              <span>Driven from `/api/products?featured=true`.</span>
+            </div>
+            <div className="hero-stat panel">
+              <strong>Reusable sections</strong>
+              <span>Structured to support future routes.</span>
+            </div>
           </div>
         </article>
 
@@ -46,15 +62,15 @@ export function Hero() {
 
           <section className="status-card">
             <div className="status-row">
-              <h3>Alerts processed</h3>
-              <span>24h</span>
+              <h3>Response coverage</h3>
+              <span>24/7</span>
             </div>
-            <p>12 alerts, 0 critical, 2 under investigation.</p>
+            <p>Managed triage, escalation and remediation guidance across core service lines.</p>
           </section>
 
           <section className="status-card">
-            <h3>Recommended action</h3>
-            <p>Roll out MFA on every privileged account before expanding the storefront.</p>
+            <h3>Next phase</h3>
+            <p>Extend the SPA into product and category pages without reintroducing server-rendered public views.</p>
           </section>
         </aside>
       </div>

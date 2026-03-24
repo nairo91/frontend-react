@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { SectionHeading } from './SectionHeading'
 
 const slides = [
   {
@@ -30,9 +32,17 @@ const slides = [
 export function Carousel() {
   const [activeIndex, setActiveIndex] = useState(0)
 
+  const goToPrevious = () => {
+    setActiveIndex((current) => (current - 1 + slides.length) % slides.length)
+  }
+
+  const goToNext = () => {
+    setActiveIndex((current) => (current + 1) % slides.length)
+  }
+
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % slides.length)
+      goToNext()
     }, 4500)
 
     return () => window.clearInterval(timer)
@@ -41,38 +51,36 @@ export function Carousel() {
   return (
     <section className="section">
       <div className="container carousel">
-        <div className="section-head">
-          <div>
-            <h2 className="section-title">Spotlight</h2>
-            <p className="section-copy">Static marketing content for now, ready to be replaced later if a real API need appears.</p>
-          </div>
-        </div>
+        <SectionHeading
+          title="Spotlight"
+          copy="Static marketing blocks for now, organized as a reusable carousel module with explicit navigation."
+          meta={`${activeIndex + 1} / ${slides.length}`}
+        />
 
         <div className="carousel-window panel">
           <div className="carousel-track" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
             {slides.map((slide) => (
               <div className="carousel-slide" key={slide.title}>
                 <div className="slide-card">
-                  <div>
+                  <div className="slide-copy">
                     <span className="eyebrow">{slide.eyebrow}</span>
-                    <h3 className="section-title" style={{ marginTop: '1rem' }}>
-                      {slide.title}
-                    </h3>
-                    <p className="section-copy" style={{ marginTop: '1rem' }}>
-                      {slide.copy}
-                    </p>
+                    <h3 className="section-title slide-title">{slide.title}</h3>
+                    <p className="section-copy slide-copy-text">{slide.copy}</p>
                     <div className="hero-actions">
-                      <a className="button-primary" href="#featured">
+                      <Link className="button-primary" to="/products">
                         {slide.cta}
-                      </a>
+                      </Link>
                     </div>
                   </div>
 
                   <div className="slide-panel">
                     <strong>{slide.panelTitle}</strong>
-                    <p className="section-copy" style={{ marginTop: '0.6rem' }}>
-                      {slide.panelCopy}
-                    </p>
+                    <p className="section-copy slide-panel-copy">{slide.panelCopy}</p>
+                    <div className="slide-signal">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -80,16 +88,26 @@ export function Carousel() {
           </div>
         </div>
 
-        <div className="carousel-dots" aria-label="Carousel navigation">
-          {slides.map((slide, index) => (
-            <button
-              key={slide.title}
-              className={index === activeIndex ? 'is-active' : ''}
-              type="button"
-              aria-label={`Show slide ${index + 1}`}
-              onClick={() => setActiveIndex(index)}
-            />
-          ))}
+        <div className="carousel-controls">
+          <button className="carousel-arrow" type="button" onClick={goToPrevious} aria-label="Show previous slide">
+            ←
+          </button>
+
+          <div className="carousel-dots" aria-label="Carousel navigation">
+            {slides.map((slide, index) => (
+              <button
+                key={slide.title}
+                className={index === activeIndex ? 'is-active' : ''}
+                type="button"
+                aria-label={`Show slide ${index + 1}`}
+                onClick={() => setActiveIndex(index)}
+              />
+            ))}
+          </div>
+
+          <button className="carousel-arrow" type="button" onClick={goToNext} aria-label="Show next slide">
+            →
+          </button>
         </div>
       </div>
     </section>

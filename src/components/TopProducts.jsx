@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom'
+import { ResourceState } from './ResourceState'
+import { SectionHeading } from './SectionHeading'
+
 function formatPrice(price) {
   if (!price) {
     return 'Contact sales'
@@ -20,38 +24,38 @@ export function TopProducts({ products, isLoading, error }) {
   return (
     <section className="section" id="featured">
       <div className="container">
-        <div className="section-head">
-          <div>
-            <h2 className="section-title">Top products</h2>
-            <p className="section-copy">Loaded from `GET /api/products?featured=true` and kept intentionally narrow for the first SPA milestone.</p>
-          </div>
-          <span className="section-link">{products.length} featured</span>
-        </div>
+        <SectionHeading
+          title="Top products"
+          copy="Loaded from `GET /api/products?featured=true` to keep the homepage fast and focused."
+          meta={<Link to="/products">See product route</Link>}
+        />
 
-        {isLoading ? (
-          <div className="loading-grid">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <div className="skeleton" key={index} />
-            ))}
-          </div>
-        ) : error ? (
-          <div className="empty-state">Unable to load featured products from the backend API.</div>
-        ) : (
+        <ResourceState
+          isLoading={isLoading}
+          error={error}
+          skeletonCount={4}
+          loadingClassName="loading-grid"
+          errorMessage="Unable to load featured products from the backend API."
+        >
           <div className="product-grid">
             {products.map((product) => (
               <article className="product-card" key={product.id ?? product.slug}>
-                <img src={product.image} alt={product.name} loading="lazy" />
-                <div>
-                  <strong>{product.name}</strong>
-                  <p className="section-copy" style={{ marginTop: '0.5rem' }}>
-                    {product.description}
-                  </p>
+                <div className="product-media">
+                  <img src={product.image} alt={product.name} loading="lazy" />
                 </div>
-                <div className="product-price">{formatPrice(product.price)}</div>
+                <div className="product-body">
+                  <div className="product-tag">{product.category?.name ?? 'Featured offer'}</div>
+                  <strong>{product.name}</strong>
+                  <p className="section-copy product-copy">{product.description}</p>
+                </div>
+                <div className="product-footer-row">
+                  <div className="product-price">{formatPrice(product.price)}</div>
+                  <span className="product-status">Featured</span>
+                </div>
               </article>
             ))}
           </div>
-        )}
+        </ResourceState>
       </div>
     </section>
   )
