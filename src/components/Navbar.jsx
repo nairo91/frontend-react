@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import cynaLogo from '../assets/logo-icon-transparent.png'
 import { siteText } from '../content/siteText'
 
@@ -27,6 +27,22 @@ export function Navbar() {
     </form>
   )
 
+  const renderSecondaryLink = (link, className) => {
+    if (link.to) {
+      return (
+        <Link className={className} to={link.to} key={link.label}>
+          {link.label}
+        </Link>
+      )
+    }
+
+    return (
+      <a className={className} href={link.href} key={link.label}>
+        {link.label}
+      </a>
+    )
+  }
+
   return (
     <header className="nav">
       <div className="container nav-inner">
@@ -50,11 +66,7 @@ export function Navbar() {
             {renderSearchForm('nav-search nav-search-desktop')}
 
             <div className="nav-secondary-links nav-secondary-desktop">
-              {siteText.nav.authLinks.map((link) => (
-                <a className="nav-aux-link" href={link.href} key={link.label}>
-                  {link.label}
-                </a>
-              ))}
+              {siteText.nav.authLinks.map((link) => renderSecondaryLink(link, 'nav-aux-link'))}
             </div>
 
             <button className="cart-button cart-button-desktop" type="button" title={siteText.nav.cartHint}>
@@ -89,11 +101,7 @@ export function Navbar() {
           </nav>
 
           <div className="nav-secondary-links nav-secondary-mobile">
-            {siteText.nav.authLinks.map((link) => (
-              <a className="nav-aux-link" href={link.href} key={link.label}>
-                {link.label}
-              </a>
-            ))}
+            {siteText.nav.authLinks.map((link) => renderSecondaryLink(link, 'nav-aux-link'))}
           </div>
 
           <button className="cart-button cart-button-mobile" type="button" title={siteText.nav.cartHint}>
@@ -102,11 +110,7 @@ export function Navbar() {
           </button>
 
           <div className="nav-mobile-extra">
-            {siteText.nav.mobileLinks.map((link) => (
-              <a className="nav-mobile-link" href={link.href} key={link.label}>
-                {link.label}
-              </a>
-            ))}
+            {siteText.nav.mobileLinks.map((link) => renderSecondaryLink(link, 'nav-mobile-link'))}
           </div>
         </div>
       </div>
