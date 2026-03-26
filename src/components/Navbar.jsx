@@ -17,47 +17,89 @@ export function Navbar() {
 
   const navLinkClassName = ({ isActive }) => (isActive ? 'nav-link is-active' : 'nav-link')
 
+  const renderSearchForm = (className) => (
+    <form className={className} onSubmit={handleSearch} role="search" aria-label="Recherche CYNA">
+      <input type="search" placeholder={siteText.nav.searchPlaceholder} aria-label="Rechercher sur CYNA" />
+      <button className="nav-search-button" type="submit">
+        {siteText.nav.searchButton}
+      </button>
+      <span className="visually-hidden">{siteText.nav.searchHint}</span>
+    </form>
+  )
+
   return (
     <header className="nav">
       <div className="container nav-inner">
-        <NavLink className="nav-brand" to="/" aria-label={siteText.nav.brandLabel}>
-          <img src={cynaLogo} alt="" />
-          <span>{siteText.nav.brand}</span>
-        </NavLink>
+        <div className="nav-top">
+          <div className="nav-start">
+            <NavLink className="nav-brand" to="/" aria-label={siteText.nav.brandLabel}>
+              <img src={cynaLogo} alt="" />
+              <span>{siteText.nav.brand}</span>
+            </NavLink>
 
-        <button
-          className="nav-burger"
-          type="button"
-          aria-expanded={isMenuOpen}
-          aria-controls="primary-navigation"
-          aria-label={isMenuOpen ? 'Fermer le menu principal' : 'Ouvrir le menu principal'}
-          onClick={() => setIsMenuOpen((current) => !current)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+            <nav className="nav-primary nav-primary-desktop" aria-label="Navigation principale">
+              {siteText.nav.primaryLinks.map((link) => (
+                <NavLink className={navLinkClassName} key={link.to} to={link.to}>
+                  {link.label}
+                </NavLink>
+              ))}
+            </nav>
+          </div>
 
-        <nav
-          className={isMenuOpen ? 'nav-panel is-open' : 'nav-panel'}
-          id="primary-navigation"
-          aria-label="Navigation principale"
-        >
-          <div className="nav-links">
+          <div className="nav-end">
+            {renderSearchForm('nav-search nav-search-desktop')}
+
+            <div className="nav-secondary-links nav-secondary-desktop">
+              {siteText.nav.authLinks.map((link) => (
+                <a className="nav-aux-link" href={link.href} key={link.label}>
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            <button className="cart-button cart-button-desktop" type="button" title={siteText.nav.cartHint}>
+              <span aria-hidden="true">+</span>
+              {siteText.nav.cartLabel}
+            </button>
+
+            <button
+              className="nav-burger"
+              type="button"
+              aria-expanded={isMenuOpen}
+              aria-controls="primary-navigation"
+              aria-label={isMenuOpen ? 'Fermer le menu principal' : 'Ouvrir le menu principal'}
+              onClick={() => setIsMenuOpen((current) => !current)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+          </div>
+        </div>
+
+        <div className={isMenuOpen ? 'nav-panel is-open' : 'nav-panel'} id="primary-navigation">
+          {renderSearchForm('nav-search nav-search-mobile')}
+
+          <nav className="nav-primary nav-primary-mobile" aria-label="Navigation principale mobile">
             {siteText.nav.primaryLinks.map((link) => (
               <NavLink className={navLinkClassName} key={link.to} to={link.to}>
                 {link.label}
               </NavLink>
             ))}
-          </div>
+          </nav>
 
-          <div className="nav-secondary-links">
+          <div className="nav-secondary-links nav-secondary-mobile">
             {siteText.nav.authLinks.map((link) => (
               <a className="nav-aux-link" href={link.href} key={link.label}>
                 {link.label}
               </a>
             ))}
           </div>
+
+          <button className="cart-button cart-button-mobile" type="button" title={siteText.nav.cartHint}>
+            <span aria-hidden="true">+</span>
+            {siteText.nav.cartLabel}
+          </button>
 
           <div className="nav-mobile-extra">
             {siteText.nav.mobileLinks.map((link) => (
@@ -66,21 +108,6 @@ export function Navbar() {
               </a>
             ))}
           </div>
-        </nav>
-
-        <div className="nav-actions">
-          <form className="nav-search" onSubmit={handleSearch} role="search" aria-label="Recherche CYNA">
-            <input type="search" placeholder={siteText.nav.searchPlaceholder} aria-label="Rechercher sur CYNA" />
-            <button className="nav-search-button" type="submit">
-              {siteText.nav.searchButton}
-            </button>
-            <span className="visually-hidden">{siteText.nav.searchHint}</span>
-          </form>
-
-          <button className="cart-button" type="button" title={siteText.nav.cartHint}>
-            <span aria-hidden="true">+</span>
-            {siteText.nav.cartLabel}
-          </button>
         </div>
       </div>
     </header>
