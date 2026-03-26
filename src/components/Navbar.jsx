@@ -21,8 +21,8 @@ export function Navbar() {
     <header className="nav">
       <div className="container nav-inner">
         <NavLink className="nav-brand" to="/" aria-label={siteText.nav.brandLabel}>
-          <img src={cynaLogo} alt="" />
-          <span>{siteText.nav.brand}</span>
+          <img src={cynaLogo} alt="CYNA DEV" />
+          <span className="visually-hidden">{siteText.nav.brand}</span>
         </NavLink>
 
         <button
