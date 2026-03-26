@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import cynaMark from '../assets/cyna-mark.svg'
+import cynaLogo from '../assets/logo.png'
 import { siteText } from '../content/siteText'
 
 export function Navbar() {
@@ -21,7 +21,7 @@ export function Navbar() {
     <header className="nav">
       <div className="container nav-inner">
         <NavLink className="nav-brand" to="/" aria-label={siteText.nav.brandLabel}>
-          <img src={cynaMark} alt="" />
+          <img src={cynaLogo} alt="" />
           <span>{siteText.nav.brand}</span>
         </NavLink>
 
