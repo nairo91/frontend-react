@@ -781,6 +781,11 @@ main {
   color: var(--text-soft);
 }
 
+.auth-provider-group {
+  display: grid;
+  gap: 0.45rem;
+}
+
 .auth-provider-button {
   min-height: 3rem;
   padding: 0 1rem;
@@ -790,6 +795,13 @@ main {
   color: #fff;
   cursor: not-allowed;
   opacity: 0.82;
+}
+
+.auth-provider-note,
+.auth-helper {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.92rem;
 }
 
 .auth-divider {
@@ -874,6 +886,26 @@ main {
 .auth-meta,
 .auth-switch {
   color: var(--text-soft);
+}
+
+.auth-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.auth-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-soft);
+}
+
+.auth-checkbox input {
+  width: 1rem;
+  height: 1rem;
 }
 
 .auth-switch {

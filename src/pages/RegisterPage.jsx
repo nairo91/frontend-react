@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { AuthPageLayout } from '../components/auth/AuthPageLayout'
 import { siteText } from '../content/siteText'
+import { getRegisterValidationError } from '../utils/authValidation'
 
 export function RegisterPage() {
   const page = siteText.auth.register
   const [formValues, setFormValues] = useState({
     fullName: '',
-    company: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -28,14 +28,21 @@ export function RegisterPage() {
     setErrorMessage('')
     setInfoMessage('')
 
-    if (formValues.password !== formValues.confirmPassword) {
-      setErrorMessage(page.passwordMismatch)
+    const validationError = getRegisterValidationError(formValues)
+    if (validationError) {
+      setErrorMessage(validationError)
       return
     }
 
     setIsSubmitting(true)
     await new Promise((resolve) => window.setTimeout(resolve, 500))
     setInfoMessage(page.info)
+    setFormValues({
+      fullName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    })
     setIsSubmitting(false)
   }
 
@@ -44,33 +51,29 @@ export function RegisterPage() {
       eyebrow={page.eyebrow}
       title={page.title}
       copy={page.copy}
-      benefits={siteText.auth.benefits}
+      benefits={siteText.auth.registerBenefits}
       cardTitle={page.cardTitle}
       cardCopy={page.cardCopy}
       footerPrompt={page.switchPrompt}
       footerActionLabel={page.switchAction}
       footerActionTo="/login"
     >
-      <button className="auth-provider-button" type="button" disabled title={page.googleHint}>
-        {page.google}
-      </button>
+      <div className="auth-provider-group">
+        <button className="auth-provider-button" type="button" disabled title={page.googleHint}>
+          {page.google}
+        </button>
+        <p className="auth-provider-note">{page.googleStatus}</p>
+      </div>
 
       <div className="auth-divider">
         <span>{page.divider}</span>
       </div>
 
       <form className="auth-form" onSubmit={handleSubmit}>
-        <div className="auth-form-grid">
-          <label className="auth-field">
-            <span>{page.fullNameLabel}</span>
-            <input type="text" name="fullName" value={formValues.fullName} onChange={handleChange} required />
-          </label>
-
-          <label className="auth-field">
-            <span>{page.companyLabel}</span>
-            <input type="text" name="company" value={formValues.company} onChange={handleChange} />
-          </label>
-        </div>
+        <label className="auth-field">
+          <span>{page.fullNameLabel}</span>
+          <input type="text" name="fullName" value={formValues.fullName} onChange={handleChange} required />
+        </label>
 
         <label className="auth-field">
           <span>{page.emailLabel}</span>
@@ -102,6 +105,8 @@ export function RegisterPage() {
             />
           </label>
         </div>
+
+        <p className="auth-helper">{page.passwordHelp}</p>
 
         {errorMessage ? <div className="auth-feedback auth-feedback-error">{errorMessage}</div> : null}
         {infoMessage ? <div className="auth-feedback auth-feedback-info">{infoMessage}</div> : null}

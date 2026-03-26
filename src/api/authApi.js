@@ -6,12 +6,19 @@ export async function loginWithPassword(credentials) {
   return apiPost('/api/login_check', credentials)
 }
 
-export function saveAuthToken(token) {
+export function saveAuthToken(token, rememberMe = true) {
   if (typeof window === 'undefined') {
     return
   }
 
-  window.localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, token)
+  clearAuthToken()
+
+  if (rememberMe) {
+    window.localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, token)
+    return
+  }
+
+  window.sessionStorage.setItem(AUTH_TOKEN_STORAGE_KEY, token)
 }
 
 export function getAuthToken() {
@@ -19,7 +26,7 @@ export function getAuthToken() {
     return null
   }
 
-  return window.localStorage.getItem(AUTH_TOKEN_STORAGE_KEY)
+  return window.localStorage.getItem(AUTH_TOKEN_STORAGE_KEY) ?? window.sessionStorage.getItem(AUTH_TOKEN_STORAGE_KEY)
 }
 
 export function clearAuthToken() {
@@ -28,4 +35,5 @@ export function clearAuthToken() {
   }
 
   window.localStorage.removeItem(AUTH_TOKEN_STORAGE_KEY)
+  window.sessionStorage.removeItem(AUTH_TOKEN_STORAGE_KEY)
 }

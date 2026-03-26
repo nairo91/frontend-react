@@ -4,6 +4,7 @@ import { CategoriesPage } from '../pages/CategoriesPage'
 import { HomePage } from '../pages/HomePage'
 import { LoginPage } from '../pages/LoginPage'
 import { NotFoundPage } from '../pages/NotFoundPage'
+import { PrivateAreaPage } from '../pages/PrivateAreaPage'
 import { ProductsPage } from '../pages/ProductsPage'
 import { RegisterPage } from '../pages/RegisterPage'
 
@@ -17,6 +18,7 @@ export function AppRouter() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/espace-client" element={<PrivateAreaPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AppShell>
